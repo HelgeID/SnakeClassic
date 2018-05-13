@@ -1,26 +1,22 @@
-﻿//Test Pixel
-#include "pixel.h"
+﻿//Test Field
 #include <SFML\Graphics.hpp>
+#include "game.h"
+using namespace sf;
 
 int main()
 {
-	using namespace sf;
 	RenderWindow window(VideoMode(322, 322), "SFML SNAKE", Style::Close);
-
-	Pixel pixel;
-	pixel.CreatePixel(10, 10);
+	Game game(window);
 
 	while (window.isOpen()) {
 		Event event;
 		while (window.pollEvent(event)) {
 			if (event.type == Event::Closed)
-				//window.close();
-				pixel.SetPixel(BLUE);
+				window.close();
 		}
 		window.clear();
-		window.draw(*pixel.pixel);
+		game.draw();
 		window.display();
 	}
-	pixel.DeletePixel();//don't forget to clear the memory!!!
 	return 0;
 }
