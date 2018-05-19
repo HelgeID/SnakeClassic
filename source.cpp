@@ -1,4 +1,4 @@
-﻿//Test Field
+﻿//Test birth SNAKE
 #include <SFML\Graphics.hpp>
 #include "game.h"
 using namespace sf;
