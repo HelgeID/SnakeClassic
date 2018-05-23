@@ -98,12 +98,11 @@ void Game::draw_snake(bool& fDRAWSNAKE)
 	
 	fDRAWSNAKE = true;
 
+	for (Position item : snakeArr)
+		field->field[item.posX][item.posY].SetPixel(BLUE);
 	field->field[snakeArr[0].posX][snakeArr[0].posY].SetPixel(WHITE);
-	field->field[snakeArr[1].posX][snakeArr[1].posY].SetPixel(BLUE);
-	field->field[snakeArr[2].posX][snakeArr[2].posY].SetPixel(BLUE);
-	field->field[snakeArr[3].posX][snakeArr[3].posY].SetPixel(BLUE);
 
-	SetLengthSnake(4);
+	SetLengthSnake(snakeArr.size());
 	std::cerr << "draw a snake on a field of pixels: ok" << std::endl;
 	return;
 }
@@ -112,25 +111,25 @@ void Game::key_pressed(Event& event)
 {
 	if (event.key.code == sf::Keyboard::Up) {
 		std::cerr << "\tkey is pressed: Up" << std::endl;
-		field->field[TakeCoordinatesHead().posX][TakeCoordinatesHead().posY].SetPixel(RED);
+		this->SetMODE(modeUP);
 		goto exit_point;
 	}
 
 	if (event.key.code == sf::Keyboard::Down) {
 		std::cerr << "\tkey is pressed: Down" << std::endl;
-		field->field[TakeCoordinatesHead().posX][TakeCoordinatesHead().posY].SetPixel(RED);
+		this->SetMODE(modeDown);
 		goto exit_point;
 	}
 
 	if (event.key.code == sf::Keyboard::Right) {
 		std::cerr << "\tkey is pressed: Right" << std::endl;
-		field->field[TakeCoordinatesHead().posX][TakeCoordinatesHead().posY].SetPixel(RED);
+		this->SetMODE(modeRight);
 		goto exit_point;
 	}
 
 	if (event.key.code == sf::Keyboard::Left) {
 		std::cerr << "\tkey is pressed: Left" << std::endl;
-		field->field[TakeCoordinatesHead().posX][TakeCoordinatesHead().posY].SetPixel(RED);
+		this->SetMODE(modeLeft);
 		goto exit_point;
 	}
 

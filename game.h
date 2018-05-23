@@ -64,6 +64,7 @@ public:
 
 	//mode
 	MODE TakeMODE() { return mode; }
+	void SetMODE(MODE mode) { this->mode = mode; }
 
 	//field
 	Field* TakeField() { return field; }

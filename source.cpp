@@ -1,4 +1,4 @@
-﻿//Test Move
+﻿//Test control and move
 #include <SFML\Graphics.hpp>
 #include "game.h"
 #include <iostream>
