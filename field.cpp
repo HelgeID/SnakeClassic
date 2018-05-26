@@ -1,4 +1,6 @@
-﻿#include "field.h"
+﻿//File: field.cpp
+//Author: HelgeID
+#include "field.h"
 
 Field::Field(const int mSize, const int nSize)
 {

@@ -1,4 +1,6 @@
-﻿#pragma once
+﻿//File: field.h
+//Author: HelgeID
+#pragma once
 #include "pixel.h"
 #include <vector>
 

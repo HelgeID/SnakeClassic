@@ -1,9 +1,11 @@
+﻿//File: pixel.cpp
+//Author: HelgeID
 #include "pixel.h"
 
 void Pixel::CreatePixel(int posX, int posY) {
 	pixel = new sf::RectangleShape;
 	this->pixel->setSize(sf::Vector2f(8, 8));
-	this->pixel->setPosition(sf::Vector2f(posX, posY));
+	this->pixel->setPosition(sf::Vector2f((float)posX, (float)posY));
 	this->pixel->setFillColor(sf::Color(42, 42, 42, 255));
 	return;
 }
@@ -24,6 +26,8 @@ void Pixel::SetPixel(COLOR color) {
 			return sf::Color(112, 146, 190, 255);
 		else if (color == RED)
 			return sf::Color(237, 28, 36, 255);
+		else if (color == LIGHT_GRAY)
+			return sf::Color(80, 80, 80, 255);
 		else
 			return sf::Color::Black;
 	};

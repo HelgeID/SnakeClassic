@@ -1,6 +1,9 @@
-﻿#include "game.h"
+﻿//File: Update.cpp
+//Author: HelgeID
+#include "game.h"
 #include <chrono>
 #include <iostream>
+#include <memory>
 
 void Update::UpdateFUNC(Game& game)
 {
@@ -15,6 +18,7 @@ void Update::UpdateFUNC(Game& game)
 	for (Position &element : game.snakeArr)
 		game.TakeField()->field[element.posX][element.posY].SetPixel(GRAY);
 
+	bool food(false);
 	while (true)
 	{
 		std::this_thread::sleep_for(std::chrono::milliseconds(250));
@@ -22,8 +26,20 @@ void Update::UpdateFUNC(Game& game)
 		count = 0;
 		for (Position &element : snakeArr) {
 			if (element.posX == snakeArr[0].posX && element.posY == snakeArr[0].posY && !count) {
+				if ((element.posX == game.TakeFood()->TakeCoordinatesFood().posX) && (element.posY == game.TakeFood()->TakeCoordinatesFood().posY))
+					food = !food;
+
 				try
 				{
+					bool next(false);
+					for (Position &element_next : snakeArr) {
+						if (next)
+							element == element_next ?
+								throw 0 : 0;
+						else
+							next = !next;
+					}
+
 					game.snakeArr[count].posX == SIZE - 1 || game.snakeArr[count].posX == 0 || game.snakeArr[count].posY == SIZE - 1 || game.snakeArr[count].posY == 0 ?
 						throw 0 : 0;
 
@@ -40,11 +56,17 @@ void Update::UpdateFUNC(Game& game)
 				{
 					std::cout << "BOOM!" << std::endl;
 
-					for (Position &element : game.snakeArr)
-						std::cout << element.posX << " " << element.posY << std::endl;
+					for (Position &element : game.snakeArr) {
+						game.TakeField()->field[element.posX][element.posY].SetPixel(RED);
+						std::cerr << " X:" << element.posX << " Y:" << element.posY << std::endl;
+					}
 
 					game.SetMODE(modeStop);
+					game.TakeField()->field[game.TakeFood()->TakeCoordinatesFood().posX][game.TakeFood()->TakeCoordinatesFood().posY].SetPixel(GRAY);
 					std::this_thread::sleep_for(std::chrono::seconds(1));
+
+					game.TakeRW()->setTitle("Snake Classic, Game Over!");
+
 					goto exit;
 				}
 			}
@@ -62,6 +84,21 @@ void Update::UpdateFUNC(Game& game)
 			}
 		}
 		game.TakeField()->field[snakeArr[game.TakeLengthSnake() - 1].posX][snakeArr[game.TakeLengthSnake() - 1].posY].SetPixel(GRAY);
+
+		if (food)
+		{
+			int lengthSnake(game.TakeLengthSnake());
+			std::auto_ptr<int> tailX(new int(snakeArr[lengthSnake - 1].posX));
+			std::auto_ptr<int> tailY(new int(snakeArr[lengthSnake - 1].posY));
+			game.snakeArr.push_back({ *tailX, *tailY });
+			game.SetLengthSnake(lengthSnake + 1);
+			game.UpdateFood();
+
+			std::string score = std::to_string(game.TakeLengthSnake() - 4);
+			game.TakeRW()->setTitle("Snake Classic, Score Food: " + score);
+
+			food = !food;
+		}
 	}
 exit:
 	return;
